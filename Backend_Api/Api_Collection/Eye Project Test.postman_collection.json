@@ -1,0 +1,140 @@
+{
+	"info": {
+		"_postman_id": "952d60a3-0786-4bbb-8461-3e73c4a0e276",
+		"name": "Eye Project Test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "39175131"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "email",
+							"value": "sudo@sudo.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "password",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "change_url/api/login",
+					"host": [
+						"change_url"
+					],
+					"path": [
+						"api",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Scans For User",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "6fjAI18oKtBeswgka0AmPG8e9bgT2MniUvWQCyTpb173108b",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "change_url/api/get/scan",
+					"host": [
+						"change_url"
+					],
+					"path": [
+						"api",
+						"get",
+						"scan"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Scan Your Eye Image",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "6fjAI18oKtBeswgka0AmPG8e9bgT2MniUvWQCyTpb173108b",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "right_eye",
+							"type": "file",
+							"src": []
+						},
+						{
+							"key": "left_eye",
+							"type": "file",
+							"src": []
+						}
+					]
+				},
+				"url": {
+					"raw": "change_url/api/scan",
+					"host": [
+						"change_url"
+					],
+					"path": [
+						"api",
+						"scan"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

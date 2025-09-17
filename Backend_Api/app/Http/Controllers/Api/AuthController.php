@@ -6,55 +6,58 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthController extends Controller
 {
-  public function register(Request $request)
-{
-    // Validation
-    $request->validate([
-        'name' => 'required|string|max:255',
-        'email' => 'required|string|email|max:255|unique:users',
-        'password' => 'required|string|min:6',
-    ]);
+     public function register(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:6',
+        ]);
 
-    // إنشاء المستخدم
-    $user = User::create([
-        'name' => $request->name,
-        'email' => $request->email,
-        'password' => Hash::make($request->password),
-    ]);
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+        ]);
 
-    try {
-        // إنشاء التوكن
-        $token = JWTAuth::fromUser($user);
+        $token = $user->createToken('mobile')->plainTextToken;
 
         return response()->json([
-            'message' => 'تم التسجيل بنجاح ✅',
+            'message' => 'تم التسجيل بنجاح',
             'token' => $token,
-            'user' => $user
-        ], 200);
-
-    } catch (\Exception $e) {
-        // لو في مشكلة مع JWT
-        return response()->json([
-            'error' => 'فشل إنشاء التوكن',
-            'details' => $e->getMessage()
-        ], 500);
+            'user' => $user,
+        ]);
     }
-}
-
-
 
     public function login(Request $request)
     {
-        $credentials = $request->only('email', 'password');
+        $request->validate([
+            'email' => 'required|string|email',
+            'password' => 'required|string',
+        ]);
 
-        if (!$token = JWTAuth::attempt($credentials)) {
-            return response()->json(['error' => 'Invalid credentials'], 401);
+        $user = User::where('email', $request->email)->first();
+
+        if (! $user || ! Hash::check($request->password, $user->password)) {
+            return response()->json(['error' => 'بيانات الدخول غير صحيحة'], 401);
         }
 
-        return response()->json(['token' => $token]);
+        $token = $user->createToken('mobile')->plainTextToken;
+
+        return response()->json([
+            'message' => 'تم تسجيل الدخول بنجاح',
+            'token' => $token,
+            'user' => $user,
+        ]);
+    }
+
+    public function logout(Request $request)
+    {
+        $request->user()->tokens()->delete();
+
+        return response()->json(['message' => 'تم تسجيل الخروج بنجاح']);
     }
 }
