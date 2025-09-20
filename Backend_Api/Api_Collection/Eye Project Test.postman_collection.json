@@ -22,12 +22,12 @@
 					"formdata": [
 						{
 							"key": "email",
-							"value": "sudo@sudo.com",
+							"value": "",
 							"type": "text"
 						},
 						{
 							"key": "password",
-							"value": "password",
+							"value": "",
 							"type": "text"
 						}
 					]
@@ -56,7 +56,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "6fjAI18oKtBeswgka0AmPG8e9bgT2MniUvWQCyTpb173108b",
+							"value": "",
 							"type": "string"
 						}
 					]
@@ -95,7 +95,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "6fjAI18oKtBeswgka0AmPG8e9bgT2MniUvWQCyTpb173108b",
+							"value": "",
 							"type": "string"
 						}
 					]
