@@ -9,11 +9,8 @@ class Scan extends Model
 {
     protected $fillable = [
         'user_id',
-        'left_path',
-        'right_path',
-        'result',
         'ai_response',
-        'status',
+        'image',
     ];
 
     protected $casts = [

@@ -14,11 +14,10 @@ return new class extends Migration
         Schema::create('scans', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->string('left_path');
-            $table->string('right_path');
-            $table->string('result')->nullable();
+            $table->string('image');
+            // $table->string('result')->nullable();
             $table->json('ai_response')->nullable();
-            $table->enum('status', ['pending','processing','done','failed'])->default('pending');
+            // $table->enum('status', ['pending','processing','done','failed'])->default('pending');
             $table->timestamps();
         });
     }

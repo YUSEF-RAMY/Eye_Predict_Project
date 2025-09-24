@@ -33,9 +33,12 @@
 					]
 				},
 				"url": {
-					"raw": "change_url/api/login",
+					"raw": "https://4db2545f3ffd.ngrok-free.app/api/login",
+					"protocol": "https",
 					"host": [
-						"change_url"
+						"4db2545f3ffd",
+						"ngrok-free",
+						"app"
 					],
 					"path": [
 						"api",
@@ -74,9 +77,12 @@
 					"formdata": []
 				},
 				"url": {
-					"raw": "change_url/api/get/scan",
+					"raw": "https://4db2545f3ffd.ngrok-free.app/api/get/scan",
+					"protocol": "https",
 					"host": [
-						"change_url"
+						"4db2545f3ffd",
+						"ngrok-free",
+						"app"
 					],
 					"path": [
 						"api",
@@ -112,25 +118,80 @@
 					"mode": "formdata",
 					"formdata": [
 						{
-							"key": "right_eye",
-							"type": "file",
-							"src": []
-						},
-						{
-							"key": "left_eye",
+							"key": "image",
 							"type": "file",
 							"src": []
 						}
 					]
 				},
 				"url": {
-					"raw": "change_url/api/scan",
+					"raw": "https://4db2545f3ffd.ngrok-free.app/api/scan",
+					"protocol": "https",
 					"host": [
-						"change_url"
+						"4db2545f3ffd",
+						"ngrok-free",
+						"app"
 					],
 					"path": [
 						"api",
 						"scan"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Register",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://4db2545f3ffd.ngrok-free.app/api/register",
+					"protocol": "https",
+					"host": [
+						"4db2545f3ffd",
+						"ngrok-free",
+						"app"
+					],
+					"path": [
+						"api",
+						"register"
 					]
 				}
 			},
