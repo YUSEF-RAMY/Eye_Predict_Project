@@ -15,32 +15,55 @@ class ScanController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $images = Scan::where('user_id' , $user->id)->get();
-        return $images;
+        $images = Scan::where('user_id', $user->id)
+            ->select(['id', 'user_id', 'image as photo' , 'ai_response'])->get()
+            ->map(function($scan){
+                 // لو ai_response أصلاً Array
+        if (is_array($scan->ai_response)) {
+            $ai = $scan->ai_response;
+        } else {
+            // لو String يبقى نحوله Array
+            $ai = json_decode($scan->ai_response, true);
+        }
+                return [
+                    'id'      => $scan->id,
+                    'user_id' => $scan->user_id,
+                    'photo'   => $scan->photo,
+                    'predicted_class' => $ai['predicted_class'] ?? null,
+                    'confidence'      => isset($ai['confidence']) 
+                                    ? round($ai['confidence'] * 100, 2) . '%' 
+                                    : null,
+                ];
+            });
+
+            return $images;
     }
 
     public function upload(Request $request)
     {
         $request->validate([
-            'left_eye' => 'required|image|mimes:jpg,png,jpeg|max:5120',
-            'right_eye' => 'required|image|mimes:jpg,png,jpeg|max:5120',
+            'image.*' => 'required|image|mimes:jpg,png,jpeg|max:5120',
         ]);
 
         $user = $request->user();
 
-        $leftPath = $request->file('left_eye')->store('scans', 'public');
-        $rightPath = $request->file('right_eye')->store('scans', 'public');
+        $path = $request->file('image')->store('scans', 'public');
+        $url = asset('storage/' . $path);
 
-        $leftUrl = asset('storage/' . $leftPath);
-        $rightUrl = asset('storage/' . $rightPath);
+        $response = Http::attach('image', file_get_contents(storage_path('app/public/' . $path)), basename($path))->post('https://b708d62e893d.ngrok-free.app/predict/');
 
-        $scan = Scan::create([
+        $prediction = $response->json();
+        Scan::create([
             'user_id' => $user->id,
-            'left_path' => $leftUrl,
-            'right_path' => $rightUrl,
-            'status' => 'processing',
+            'image' => $url,
+            'ai_response' => $prediction,
         ]);
-
-        return ['Message 4U' => 'The Developer Is Waiting For The AI Team ​To Be Finished.'];
+        $confidence = isset($prediction['confidence']) ? round($prediction['confidence'] * 100, 2) . '%' : null;
+        return [
+            'Result' => $prediction['predicted_class'],
+            'Accuracy' => $confidence,
+            'image'=> $url,
+            'message' => 'thank you',
+        ];
     }
 }
