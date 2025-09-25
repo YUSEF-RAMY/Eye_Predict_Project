@@ -1,4 +1,3 @@
-import 'package:eye_app/app/extention.dart';
 import 'package:eye_app/presentation/resources/color_manager.dart';
 import 'package:eye_app/presentation/resources/image_manager.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +7,8 @@ import '../onboarding_screen/onboarding_screen.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
+  static String id = 'WelcomeScreen';
+
 
   @override
   Widget build(BuildContext context) {
@@ -31,9 +32,9 @@ class WelcomeScreen extends StatelessWidget {
                 ],
               ),
             ),
-            Image.asset(ImageManager.splash),
+            Image.asset(ImageManager.welcome),
             GestureDetector(
-              onTap: () => context.navigateReplacementTo(OnboardingScreen()),
+              onTap: () => Navigator.pushReplacementNamed(context, OnboardingScreen.id),
               child: Container(
                 width: 157.w,
                 height: 56.h,

@@ -1,7 +1,8 @@
+import 'dart:developer';
 import 'dart:io';
 import 'package:dio/dio.dart';
 
-Future<void> UploadImageRequest(File imageFile) async {
+Future<void> UploadImageRequest({required File imageFile}) async {
   final dio = Dio();
 
   try {
@@ -23,12 +24,12 @@ Future<void> UploadImageRequest(File imageFile) async {
     );
 
     if (response.statusCode == 200) {
-      print("upload image successfully");
-      print(response.data);
+      log("upload image successfully");
+      log(response.data);
     } else {
-      print(" error: ${response.statusCode}");
+      log(" error: ${response.statusCode}");
     }
   } catch (e) {
-    print(" Exception: $e");
+    log(" Exception: $e");
   }
 }
