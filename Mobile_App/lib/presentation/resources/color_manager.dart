@@ -9,5 +9,6 @@ class ColorManager{
   static const Color gray = Color(0xffa1a1a1);
   static const Color white = Color(0xffffffff);
   static const Color red = Color(0xffFF0000);
+  static const Color black = Color(0xff000000);
   static const Color subtitle_color = Color(0xffDCE1E8);
 }

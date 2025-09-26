@@ -1,4 +1,3 @@
-import 'package:eye_app/app/extention.dart';
 import 'package:eye_app/presentation/resources/text_style_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -9,6 +8,8 @@ import 'onboarding_model.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
+  static String id = 'OnboardingScreen';
+
 
   @override
   State<OnboardingScreen> createState() => _OnboardingScreenState();
@@ -60,7 +61,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           children: [
             Spacer(),
             TextButton(
-              onPressed: () => context.navigateReplacementTo(HomeScreen()),
+              onPressed: () => Navigator.pushReplacementNamed(context, HomeScreen.id),
               child: Text('skip', style: TextStyleManager.White16Medium),
             ),
           ],
@@ -146,7 +147,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             onTap: () {
               setState(() {
                 if (_pageIndex == onboardingScreens.length - 1) {
-                  context.navigateReplacementTo(HomeScreen());
+                  Navigator.pushReplacementNamed(context, HomeScreen.id);
                 } else {
                   ++_pageIndex;
                 }

@@ -10,6 +10,8 @@ import '../../../data/request/upload_image_request.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+  static String id = 'HomeScreen';
+
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -53,9 +55,9 @@ class _HomeScreenState extends State<HomeScreen> {
               style: TextStyleManager.White16Medium,
             ),
             GestureDetector(
-              onTap: () async{
+              onTap: () async {
                 await pickImage(ImageSource.gallery);
-                await UploadImageRequest(_image);
+                await UploadImageRequest(imageFile: _image);
               },
               child: Container(
                 width: 195.w,

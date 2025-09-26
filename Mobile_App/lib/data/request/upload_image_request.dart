@@ -1,34 +1,34 @@
+import 'dart:developer';
 import 'dart:io';
 import 'package:dio/dio.dart';
 
-Future<void> UploadImageRequest(File imageFile) async {
+Future<void> UploadImageRequest({required File imageFile}) async {
   final dio = Dio();
 
   try {
-    String fileName = imageFile.path.split('/').last;
+    //String fileName = imageFile.path.split('/').last;//للحصول على اسم الصوره
 
     FormData formData = FormData.fromMap({
-      "file": await MultipartFile.fromFile(imageFile.path, filename: fileName),
+      "file": await MultipartFile.fromFile(imageFile.path),
     });
 
     final response = await dio.post(
-      "https://example.com/upload", //  لينك الـ API
+      "https://example.com/upload_image", //  لينك الـ API
       data: formData,
       options: Options(
         headers: {
-          "Authorization": "YOUR_TOKEN", // token
-          "Content-Type": "", //multipart/form-data
+          "Authorization": "YOUR_TOKEN",
         },
       ),
     );
 
     if (response.statusCode == 200) {
-      print("upload image successfully");
-      print(response.data);
+      log("upload image successfully");
+      log(response.data);
     } else {
-      print(" error: ${response.statusCode}");
+      log(" error: ${response.statusCode}");
     }
   } catch (e) {
-    print(" Exception: $e");
+    log(" Exception: $e");
   }
 }

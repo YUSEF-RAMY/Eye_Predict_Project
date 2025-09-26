@@ -19,6 +19,11 @@ class TextStyleManager {
     fontSize: 28,
     fontWeight: FontWeight.w800,
   );
+  static TextStyle White24ExtraBold = TextStyle(
+    color: ColorManager.white,
+    fontSize: 24,
+    fontWeight: FontWeight.w800,
+  );
   static TextStyle White20Medium = TextStyle(
     color: ColorManager.white,
     fontSize: 20,
