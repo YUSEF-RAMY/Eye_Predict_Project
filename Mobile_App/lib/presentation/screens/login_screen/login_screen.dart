@@ -1,7 +1,9 @@
-import 'package:eye_app/presentation/screens/welcome_screen/welcome_screen.dart';
+import 'package:dio/dio.dart';
+import 'package:eye_app/data/model/login_model.dart';
+import 'package:eye_app/data/request/login_request.dart';
 import 'package:flutter/material.dart';
-import '../../componants/custom_button.dart';
-import '../../componants/custom_text_field.dart';
+import '../../components/custom_button.dart';
+import '../../components/custom_text_field.dart';
 import '../../resources/color_manager.dart';
 import '../../resources/image_manager.dart';
 import '../../resources/text_style_manager.dart';
@@ -11,9 +13,14 @@ class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
 
   static String id = 'LoginScreen';
+  late String email;
+
+  late String password;
 
   @override
   Widget build(BuildContext context) {
+    final loginRequest = LoginRequest(Dio());
+    late final loginModel = LoginModel(email: email, password: password);
     return Scaffold(
       backgroundColor: ColorManager.background_color,
       body: Padding(
@@ -32,13 +39,16 @@ class LoginScreen extends StatelessWidget {
             const SizedBox(height: 8.0),
             Text('Login', style: TextStyleManager.White30ExtraBold),
             Spacer(flex: 1),
-            CustomTextField(hintText: 'email'),
+            CustomTextField(hintText: 'email', onchaned: (value) {}),
             SizedBox(height: 8),
-            CustomTextField(hintText: 'password'),
+            CustomTextField(hintText: 'password', onchaned: (value) {}),
             SizedBox(height: 20),
-            CustomButton(text: 'Login',onTap: (){
-              Navigator.pushReplacementNamed(context, WelcomeScreen.id,);
-            },),
+            CustomButton(
+              text: 'Login',
+              onTap: () async {
+                await loginRequest.loginRequest(loginModel);
+              },
+            ),
             SizedBox(height: 12),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
