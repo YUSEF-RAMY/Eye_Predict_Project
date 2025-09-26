@@ -1,6 +1,8 @@
+import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:eye_app/data/model/login_model.dart';
 import 'package:eye_app/data/request/login_request.dart';
+import 'package:eye_app/presentation/screens/home_screen/home_screen.dart';
 import 'package:flutter/material.dart';
 import '../../components/custom_button.dart';
 import '../../components/custom_text_field.dart';
@@ -9,18 +11,23 @@ import '../../resources/image_manager.dart';
 import '../../resources/text_style_manager.dart';
 import '../signup_screen/signup_screen.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   LoginScreen({super.key});
 
   static String id = 'LoginScreen';
-  late String email;
 
-  late String password;
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  final TextEditingController emailController = TextEditingController();
+
+  final TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     final loginRequest = LoginRequest(Dio());
-    late final loginModel = LoginModel(email: email, password: password);
     return Scaffold(
       backgroundColor: ColorManager.background_color,
       body: Padding(
@@ -39,14 +46,29 @@ class LoginScreen extends StatelessWidget {
             const SizedBox(height: 8.0),
             Text('Login', style: TextStyleManager.White30ExtraBold),
             Spacer(flex: 1),
-            CustomTextField(hintText: 'email', onchaned: (value) {}),
+            CustomTextField(hintText: 'email', controller: emailController),
             SizedBox(height: 8),
-            CustomTextField(hintText: 'password', onchaned: (value) {}),
+            CustomTextField(
+              hintText: 'password',
+              controller: passwordController,
+            ),
             SizedBox(height: 20),
             CustomButton(
               text: 'Login',
               onTap: () async {
-                await loginRequest.loginRequest(loginModel);
+                final loginModel = LoginModel(
+                  email: emailController.text,
+                  password: passwordController.text,
+                );
+                log(
+                  '${emailController.text} ,,,,,, ${passwordController.text}',
+                );
+                String oldToken = await loginRequest.loginRequest(loginModel);
+                SignUpScreen.token = oldToken.split('|').last;
+                log(SignUpScreen.token);
+                if (LoginRequest.success == true) {
+                  Navigator.pushReplacementNamed(context, HomeScreen.id);
+                }
               },
             ),
             SizedBox(height: 12),

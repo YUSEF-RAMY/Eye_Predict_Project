@@ -4,15 +4,16 @@ import '../resources/color_manager.dart';
 import '../resources/text_style_manager.dart';
 
 class CustomTextField extends StatelessWidget {
-  CustomTextField({required this.hintText,required this.onchaned});
+  CustomTextField({required this.hintText,required this.controller});
 
   String? hintText;
-  final ValueChanged<String> onchaned;
+  //final ValueChanged<String> onchaned;
+  final controller;
 
   @override
   Widget build(BuildContext context) {
     return TextField(
-      onSubmitted: (value) {},
+      controller: controller,
       decoration: InputDecoration(
         filled: true,
         fillColor: ColorManager.white,

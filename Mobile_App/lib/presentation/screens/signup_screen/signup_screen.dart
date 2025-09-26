@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 import 'package:eye_app/data/model/signup_model.dart';
+import 'package:eye_app/presentation/screens/welcome_screen/welcome_screen.dart';
 import 'package:flutter/material.dart';
 import '../../../data/request/signup_request.dart';
 import '../../components/custom_button.dart';
@@ -11,30 +14,23 @@ class SignUpScreen extends StatefulWidget {
   SignUpScreen({super.key});
 
   static String id = 'SignUpScreen';
+  static late String token;
 
   @override
   State<SignUpScreen> createState() => _SignUpScreenState();
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
-  late String userName;
+  final TextEditingController nameController = TextEditingController();
 
-  late String email;
+  final TextEditingController emailController = TextEditingController();
 
-  late String password;
-
-  late String confirmPassword;
+  final TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     final signupRequest = SignupRequest();
 
-    late final signupModel = SignupModel(
-      username: userName,
-      email: email,
-      password: password,
-      confirmPassword: confirmPassword,
-    );
     return Scaffold(
       backgroundColor: ColorManager.background_color,
       body: Padding(
@@ -58,38 +54,33 @@ class _SignUpScreenState extends State<SignUpScreen> {
               maxLines: 2,
             ),
             Spacer(flex: 1),
-            CustomTextField(
-              hintText: 'User name',
-              onchaned: (value) {
-                userName = value;
-              },
-            ),
+            CustomTextField(hintText: 'User name', controller: nameController),
             SizedBox(height: 8),
             CustomTextField(
               hintText: 'Your email',
-              onchaned: (value) {
-                email = value;
-              },
+              controller: emailController,
             ),
             SizedBox(height: 8),
             CustomTextField(
               hintText: 'password',
-              onchaned: (value) {
-                password = value;
-              },
-            ),
-            SizedBox(height: 8),
-            CustomTextField(
-              hintText: 'confirm password',
-              onchaned: (value) {
-                confirmPassword = value;
-              },
+              controller: passwordController,
             ),
             SizedBox(height: 20),
             CustomButton(
               text: 'Signup',
               onTap: () async {
-                await signupRequest.signupRequest(signupModel);
+                //log('${nameController.text} & ${emailController.text} & ${passwordController.text}');
+                final signupModel = SignupModel(
+                  name: nameController.text,
+                  email: emailController.text,
+                  password: passwordController.text,
+                );
+                String oldToken = await signupRequest.signupRequest(signupModel);
+                SignUpScreen.token = oldToken.split('|').last;
+                log(SignUpScreen.token);
+                if (SignupRequest.success == true) {
+                  Navigator.pushReplacementNamed(context, WelcomeScreen.id);
+                }
               },
             ),
             SizedBox(height: 12),
