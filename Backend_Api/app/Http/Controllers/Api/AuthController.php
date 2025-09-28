@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
@@ -27,10 +29,9 @@ class AuthController extends Controller
         $token = $user->createToken('mobile')->plainTextToken;
         $user->update(['state' => 'online']);
 
-        return response()->json([
-            'message' => 'تم التسجيل بنجاح',
+        return (new UserResource($user))->additional([
             'token' => $token,
-            'user' => $user,
+            'message' => 'Welcome, Your Registration is Successful',
         ]);
     }
 
@@ -51,17 +52,16 @@ class AuthController extends Controller
 
         $user->update(['state' => 'online']);
 
-        return response()->json([
-            'message' => 'تم تسجيل الدخول بنجاح',
+        return (new UserResource($user))->additional([
             'token' => $token,
-            'user' => $user,
+            'message' => 'تم تسجيل الدخول بنجاح',
         ]);
     }
 
     public function logout(Request $request)
     {
         $request->user()->tokens()->delete();
-
+        $request->user()->update(['state' => 'offline']);
         return response()->json(['message' => 'تم تسجيل الخروج بنجاح']);
     }
 }

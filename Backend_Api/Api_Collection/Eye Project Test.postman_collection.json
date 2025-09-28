@@ -9,6 +9,9 @@
 		{
 			"name": "Login",
 			"request": {
+				"auth": {
+					"type": "noauth"
+				},
 				"method": "POST",
 				"header": [
 					{
@@ -33,10 +36,10 @@
 					]
 				},
 				"url": {
-					"raw": "https://4db2545f3ffd.ngrok-free.app/api/login",
+					"raw": "https://1731d01f1708.ngrok-free.app/api/login",
 					"protocol": "https",
 					"host": [
-						"4db2545f3ffd",
+						"1731d01f1708",
 						"ngrok-free",
 						"app"
 					],
@@ -77,10 +80,10 @@
 					"formdata": []
 				},
 				"url": {
-					"raw": "https://4db2545f3ffd.ngrok-free.app/api/get/scan",
+					"raw": "https://1731d01f1708.ngrok-free.app/api/get/scan",
 					"protocol": "https",
 					"host": [
-						"4db2545f3ffd",
+						"1731d01f1708",
 						"ngrok-free",
 						"app"
 					],
@@ -125,10 +128,10 @@
 					]
 				},
 				"url": {
-					"raw": "https://4db2545f3ffd.ngrok-free.app/api/scan",
+					"raw": "https://1731d01f1708.ngrok-free.app/api/scan",
 					"protocol": "https",
 					"host": [
-						"4db2545f3ffd",
+						"1731d01f1708",
 						"ngrok-free",
 						"app"
 					],
@@ -182,16 +185,47 @@
 					]
 				},
 				"url": {
-					"raw": "https://4db2545f3ffd.ngrok-free.app/api/register",
+					"raw": "https://1731d01f1708.ngrok-free.app/api/register",
 					"protocol": "https",
 					"host": [
-						"4db2545f3ffd",
+						"1731d01f1708",
 						"ngrok-free",
 						"app"
 					],
 					"path": [
 						"api",
 						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Logout",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "https://1731d01f1708.ngrok-free.app/api/logout",
+					"protocol": "https",
+					"host": [
+						"1731d01f1708",
+						"ngrok-free",
+						"app"
+					],
+					"path": [
+						"api",
+						"logout"
 					]
 				}
 			},

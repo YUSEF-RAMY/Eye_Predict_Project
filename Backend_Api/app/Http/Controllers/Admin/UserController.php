@@ -13,6 +13,7 @@ class UserController extends Controller
     public function index()
     {
         $users = User::all();
+        $users = User::withCount('scans')->get();
         return view('dashboard' , compact('users'));
     }
 
