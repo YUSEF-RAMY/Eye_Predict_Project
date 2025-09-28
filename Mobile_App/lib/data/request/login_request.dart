@@ -6,7 +6,6 @@ import '../model/login_model.dart';
 
 class LoginRequest {
   final Dio _dio;
-  static late bool success;
   LoginResponseModel? loginResponseModel;
 
   LoginRequest(this._dio);
@@ -23,16 +22,16 @@ class LoginRequest {
         data: request.toJson(),
       );
       log("Login Success: ${response.data}");
-      success = true;
+      EyeApp.success = true;
       loginResponseModel = LoginResponseModel.fromjson(response.data);
       return loginResponseModel!.token;
     } on DioException catch (e) {
       if (e.response != null) {
-        success = false;
+        EyeApp.success = false;
         log("Error: ${e.response?.statusCode} - ${e.response?.data}");
         throw Exception(e.message);
       } else {
-        success = false;
+        EyeApp.success = false;
         log("Error: ${e.message}");
         throw Exception(e.message);
       }
