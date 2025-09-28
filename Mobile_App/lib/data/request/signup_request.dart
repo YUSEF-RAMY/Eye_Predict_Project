@@ -14,7 +14,6 @@ class SignupRequest {
     ),
   );
   SignupResponseModel? signupResponseModel;
-  static late bool success;
 
   Future<String> signupRequest(SignupModel request) async {
     try {
@@ -29,16 +28,16 @@ class SignupRequest {
       );
       log("Signup Success: ${response.data}");
       signupResponseModel = SignupResponseModel.fromjson(response.data);
-      success = true;
+      EyeApp.success = true;
       return signupResponseModel!.token;
     } on DioException catch (e) {
       if (e.response != null) {
         log("Error: ${e.response?.statusCode} - ${e.response?.data}");
-        success = false;
+        EyeApp.success = false;
         throw Exception(e.message);
       } else {
         log("Error: ${e.message}");
-        success = false;
+        EyeApp.success = false;
         throw Exception(e.message);
       }
     }

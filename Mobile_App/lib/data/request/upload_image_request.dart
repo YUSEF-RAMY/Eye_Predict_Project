@@ -3,7 +3,9 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:eye_app/main.dart';
 
-Future<void> UploadImageRequest({required File imageFile}) async {
+import '../model/image_result_model.dart';
+
+Future<ImageResultModel> uploadImageRequest({required File imageFile}) async {
   final dio = Dio();
 
   try {
@@ -26,12 +28,16 @@ Future<void> UploadImageRequest({required File imageFile}) async {
       ),
     );
     log("Signup Success: ${response.data}");
+    EyeApp.success=true;
+    return ImageResultModel.fromjson(response.data);
   } on DioException catch (e) {
     if (e.response != null) {
       log("Error: ${e.response?.statusCode} - ${e.response?.data}");
+      EyeApp.success=false;
       throw Exception(e.message);
     } else {
       log("Error: ${e.message}");
+      EyeApp.success=false;
       throw Exception(e.message);
     }
   }

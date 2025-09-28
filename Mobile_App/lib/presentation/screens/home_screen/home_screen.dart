@@ -1,9 +1,11 @@
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:eye_app/data/model/image_result_model.dart';
 import 'package:eye_app/main.dart';
 import 'package:eye_app/presentation/resources/color_manager.dart';
 import 'package:eye_app/presentation/resources/text_style_manager.dart';
+import 'package:eye_app/presentation/screens/results_screen/results_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
@@ -14,6 +16,7 @@ class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   static String id = 'HomeScreen';
+  static late ImageResultModel  imageResultModel;
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -61,7 +64,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 await pickImage(ImageSource.camera);
                 log(EyeApp.token);
                 log(_image.path);
-                await UploadImageRequest(imageFile: _image);
+                HomeScreen.imageResultModel = await uploadImageRequest(imageFile: _image);
+                if (EyeApp.success == true) {
+                  Navigator.pushReplacementNamed(context, ResultsScreen.id);
+                }
               },
               child: Container(
                 width: 195.w,

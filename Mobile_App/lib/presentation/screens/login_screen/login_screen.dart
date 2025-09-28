@@ -67,7 +67,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 String oldToken = await loginRequest.loginRequest(loginModel);
                 EyeApp.token = oldToken.split('|').last;
                 log(EyeApp.token);
-                if (LoginRequest.success == true) {
+                if (EyeApp.success == true) {
                   Navigator.pushReplacementNamed(context, HomeScreen.id);
                 }
               },

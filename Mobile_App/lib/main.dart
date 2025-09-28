@@ -1,6 +1,8 @@
+import 'package:eye_app/presentation/screens/finish_screen/finish_screen.dart';
 import 'package:eye_app/presentation/screens/home_screen/home_screen.dart';
 import 'package:eye_app/presentation/screens/login_screen/login_screen.dart';
 import 'package:eye_app/presentation/screens/onboarding_screen/onboarding_screen.dart';
+import 'package:eye_app/presentation/screens/results_screen/results_screen.dart';
 import 'package:eye_app/presentation/screens/signup_screen/signup_screen.dart';
 import 'package:eye_app/presentation/screens/welcome_screen/welcome_screen.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +17,7 @@ class EyeApp extends StatelessWidget {
 
   static late String token;
   static String baseUrl = 'https://f0001fc6040b.ngrok-free.app';
+  static late bool success;
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +32,8 @@ class EyeApp extends StatelessWidget {
           WelcomeScreen.id: (context) => WelcomeScreen(),
           HomeScreen.id: (context) => HomeScreen(),
           OnboardingScreen.id: (context) => OnboardingScreen(),
+          ResultsScreen.id: (context) => ResultsScreen(),
+          FinishScreen.id: (context) => FinishScreen(),
         },
         debugShowCheckedModeBanner: false,
         initialRoute: LoginScreen.id,

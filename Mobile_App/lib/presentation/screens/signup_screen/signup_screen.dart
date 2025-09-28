@@ -77,7 +77,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 String oldToken = await signupRequest.signupRequest(signupModel);
                 EyeApp.token = oldToken.split('|').last;
                 log(EyeApp.token);
-                if (SignupRequest.success == true) {
+                if (EyeApp.success == true) {
                   Navigator.pushReplacementNamed(context, WelcomeScreen.id);
                 }
               },
