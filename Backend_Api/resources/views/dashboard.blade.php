@@ -40,7 +40,7 @@
                             @endif
                             </td>
                             <td>{{ $user->email }}</td>
-                            <td style="padding-left: 50px">2 photo</td>
+                            <td style="padding-left: 50px">{{ $user->scans_count }} photo</td>
                             @if (Auth::check() && Auth::user()->role === 'sudo')
                                 <td>
                                     <form action="{{ route('users.destroy', $user->id) }}" method="POST">

@@ -11,6 +11,7 @@ use Illuminate\Validation\ValidationException;
 
 Route::post('login', [AuthController::class, 'login']);
 Route::post('register', [AuthController::class, 'register']);
+Route::post('logout', [AuthController::class, 'logout']);
 
 // scan imaga
 Route::middleware('auth:sanctum')->group(function () {

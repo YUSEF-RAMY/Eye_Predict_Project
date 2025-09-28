@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ScansResource;
 use App\Models\Scan;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -23,15 +24,23 @@ class ScanController extends Controller
         } else {
             $ai = json_decode($scan->ai_response, true);
         }
-                return [
-                    'id'      => $scan->id,
-                    'user_id' => $scan->user_id,
-                    'photo'   => $scan->photo,
-                    'predicted_class' => $ai['predicted_class'] ?? null,
-                    'confidence'      => isset($ai['confidence']) 
-                                    ? round($ai['confidence'] * 100, 2) . '%' 
-                                    : null,
-                ];
+        return (new ScansResource($scan))->additional([
+            'Result' => $ai['predicted_class'] ?? null,
+            'Accuracy'      => isset($ai['confidence']) 
+                            ? round($ai['confidence'] * 100, 2) . '%' 
+                            : null,
+                            'message' => 'Thank U',
+                            
+        ]);
+                // return [
+                //     'id'      => $scan->id,
+                //     'user_id' => $scan->user_id,
+                //     'photo'   => $scan->photo,
+                //     'predicted_class' => $ai['predicted_class'] ?? null,
+                //     'confidence'      => isset($ai['confidence']) 
+                //                     ? round($ai['confidence'] * 100, 2) . '%' 
+                //                     : null,
+                // ];
             });
 
             return $images;
