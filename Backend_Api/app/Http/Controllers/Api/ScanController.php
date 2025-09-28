@@ -18,11 +18,9 @@ class ScanController extends Controller
         $images = Scan::where('user_id', $user->id)
             ->select(['id', 'user_id', 'image as photo' , 'ai_response'])->get()
             ->map(function($scan){
-                 // لو ai_response أصلاً Array
         if (is_array($scan->ai_response)) {
             $ai = $scan->ai_response;
         } else {
-            // لو String يبقى نحوله Array
             $ai = json_decode($scan->ai_response, true);
         }
                 return [
@@ -50,7 +48,7 @@ class ScanController extends Controller
         $path = $request->file('image')->store('scans', 'public');
         $url = asset('storage/' . $path);
 
-        $response = Http::attach('image', file_get_contents(storage_path('app/public/' . $path)), basename($path))->post('https://b708d62e893d.ngrok-free.app/predict/');
+        $response = Http::attach('image', file_get_contents(storage_path('app/public/' . $path)), basename($path))->post('https://6a5bf8bee02a.ngrok-free.app/predict/');
 
         $prediction = $response->json();
         Scan::create([

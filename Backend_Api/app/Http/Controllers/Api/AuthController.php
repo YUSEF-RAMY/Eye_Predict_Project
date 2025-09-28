@@ -21,9 +21,11 @@ class AuthController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'state' => 'offline',
         ]);
 
         $token = $user->createToken('mobile')->plainTextToken;
+        $user->update(['state' => 'online']);
 
         return response()->json([
             'message' => 'تم التسجيل بنجاح',
@@ -46,6 +48,8 @@ class AuthController extends Controller
         }
 
         $token = $user->createToken('mobile')->plainTextToken;
+
+        $user->update(['state' => 'online']);
 
         return response()->json([
             'message' => 'تم تسجيل الدخول بنجاح',
