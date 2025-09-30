@@ -15,7 +15,7 @@ base_model = load_model(MODEL_PATH)
 feature_model = Model(inputs=base_model.input, outputs=base_model.layers[-2].output)
 
 # ===== 2) class stats & thresholds =====
-STATS_DIR = "class_stats"
+STATS_DIR = r"C:\Users\hi883\OneDrive\Desktop\Test_Final_Project\AI\class_stats"
 class_stats = {
     cls: {
         'mean': np.load(os.path.join(STATS_DIR, f'{cls}_mean.npy')),
@@ -47,7 +47,7 @@ def predict_image_array(img_array):
     belonging_classes = [cls for cls, d in distances.items() if d <= thresholds_95[cls]]
 
     if len(belonging_classes) == 0:
-        return "OOD", distances
+        return "This is not an eye X-ray image", distances
     elif len(belonging_classes) == 1:
         return belonging_classes[0], distances
     else:
