@@ -1,0 +1,167 @@
+.eyecheck-container {
+  background: linear-gradient(135deg, #e8fdf5 0%, #ffffff 100%);
+  max-width: 800px;
+  margin: 30px auto;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  padding: 20px;
+}
+
+.eyecheck-header {
+  background: linear-gradient(135deg, #62d2a2 0%, #3aa374 100%);
+  color: white;
+  text-align: center;
+  padding: 25px;
+  border-radius: 15px;
+}
+
+.eyecheck-header h1 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.eyecheck-content {
+  padding: 20px;
+}
+
+.eyecheck-section {
+  margin-bottom: 25px;
+}
+
+.eyecheck-section-title {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  border-bottom: 2px solid #62d2a2;
+  padding-bottom: 5px;
+  color: #3aa374;
+}
+
+.eyecheck-instruction {
+  text-align: center;
+  margin-bottom: 15px;
+  color: #555;
+}
+
+.eyecheck-upload-area {
+  border: 2px dashed #62d2a2;
+  border-radius: 15px;
+  padding: 30px;
+  text-align: center;
+  cursor: pointer;
+  background-color: #f9fffc;
+  transition: 0.3s;
+}
+
+.eyecheck-upload-area:hover {
+  background-color: #e8fdf5;
+  border-color: #3aa374;
+}
+
+.eyecheck-upload-btn {
+  background: #62d2a2;
+  color: white;
+  padding: 8px 20px;
+  border-radius: 8px;
+  margin-top: 10px;
+  display: inline-block;
+  transition: 0.3s;
+}
+
+.eyecheck-upload-btn:hover {
+  background: #3aa374;
+}
+
+.eyecheck-preview-container {
+  margin-top: 15px;
+  text-align: center;
+}
+
+.eyecheck-preview-title {
+  margin-bottom: 10px;
+  color: #3aa374;
+}
+
+.eyecheck-preview-container img {
+  max-width: 100%;
+  max-height: 300px;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.eyecheck-result-container {
+  background: #f9fffc;
+  padding: 15px;
+  border-radius: 12px;
+  border: 1px solid #d6f5e6;
+}
+
+.eyecheck-result-title {
+  margin-bottom: 10px;
+  color: #3aa374;
+}
+
+.eyecheck-accuracy {
+  padding: 10px;
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 15px;
+  border-radius: 8px;
+}
+
+.eyecheck-sick {
+  background: #ffeaea;
+  color: #e74c3c;
+}
+
+.eyecheck-healthy {
+  background: #e8fdf5;
+  color: #27ae60;
+}
+
+.eyecheck-message {
+  text-align: center;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.eyecheck-sick-message {
+  background: #ffcccc;
+  color: #c0392b;
+}
+
+.eyecheck-healthy-message {
+  background: #ccffcc;
+  color: #27ae60;
+}
+
+.eyecheck-button {
+  width: 100%;
+  padding: 15px;
+  border: none;
+  border-radius: 10px;
+  background: #62d2a2;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 15px;
+  transition: 0.3s;
+}
+
+.eyecheck-button:hover {
+  background: #3aa374;
+}
+
+.eyecheck-button:disabled {
+  background: #aaa;
+  cursor: not-allowed;
+}
+
+@media (max-width: 600px) {
+  .eyecheck-header h1 {
+    font-size: 1.5rem;
+  }
+  .eyecheck-section-title {
+    font-size: 1.2rem;
+  }
+}
