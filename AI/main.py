@@ -1,85 +1,89 @@
-from fastapi import FastAPI, File, UploadFile, HTTPException
-from fastapi.middleware.cors import CORSMiddleware
+from fastapi import FastAPI, UploadFile, File
+from fastapi.responses import JSONResponse
+from tensorflow.keras.models import load_model, Model
+from scipy.spatial.distance import mahalanobis
 from PIL import Image
 import numpy as np
+import os
 import io
-from tensorflow.keras.models import load_model
-from tensorflow.keras.applications.resnet50 import preprocess_input
-import uvicorn
 
-# ثبّت ترتيب الكلاسات بالضبط زي ما تم التدريب عليه
-class_names = ['Cataract', 'Diabetic Retinopathy', 'Glaucoma', 'Normal']
+# ===== 1) تحميل الموديل =====
+MODEL_PATH = 'model_ResNet50.h5'
+class_names = ['cataract', 'diabetic_retinopathy', 'glaucoma', 'normal']
 
-# حمل الموديل
-model = load_model("model_ResNet50.h5")
+base_model = load_model(MODEL_PATH)
+feature_model = Model(inputs=base_model.input, outputs=base_model.layers[-2].output)
 
-# إعداد التطبيق
-app = FastAPI(
-    title="Eye Disease Classification API",
-    description="API for classifying eye diseases from retinal images with confidence filtering"
-)
+# ===== 2) class stats & thresholds =====
+STATS_DIR = r"C:\Users\hi883\OneDrive\Desktop\Test_Final_Project\AI\class_stats"
+class_stats = {
+    cls: {
+        'mean': np.load(os.path.join(STATS_DIR, f'{cls}_mean.npy')),
+        'inv_cov': np.load(os.path.join(STATS_DIR, f'{cls}_inv_cov.npy'))
+    } for cls in class_names
+}
 
-# السماح بالوصول من أي دومين (CORS)
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+thresholds_95 = {
+    'cataract': 20.7965,
+    'diabetic_retinopathy': 16.2871,
+    'glaucoma': 18.2453,
+    'normal': 17.0693
+}
 
-def preprocess_and_predict(image_data):
-    """تحضير الصورة للتنبؤ"""
-    image = Image.open(io.BytesIO(image_data)).convert('RGB')
-    image = image.resize((224, 224))
-    img_np = np.array(image, dtype='float32')
-    img_np = preprocess_input(img_np)          # preprocess الصحيح لـ ResNet50
-    img_batch = np.expand_dims(img_np, axis=0)
-    return img_batch
 
-@app.post("/predict/")
-async def predict_single_eye(image: UploadFile = File(...)):
-    # تأكيد أن الملف صورة
-    if not image.content_type.startswith('image/'):
-        raise HTTPException(status_code=400, detail="Uploaded file must be an image")
+# ===== 3) دالة التنبؤ =====
+def predict_image_array(img_array):
+    x = img_array / 255.0
+    x = np.expand_dims(x, axis=0)
 
-    contents = await image.read()
-    img_batch = preprocess_and_predict(contents)
-    probs = model.predict(img_batch, verbose=0)[0]
+    feat = feature_model.predict(x, verbose=0)[0]
 
-    predicted_index = int(np.argmax(probs))
-    confidence = float(probs[predicted_index])
+    distances = {}
+    for cls in class_stats.keys():
+        mean = class_stats[cls]['mean']
+        inv_cov = class_stats[cls]['inv_cov']
+        distances[cls] = mahalanobis(feat, mean, inv_cov)
 
-    # 🔹 فلترة بالثقة: لو أقل من 0.6 رجّع Unknown
-    threshold = 0.6
-    if confidence < threshold:
-        return {
-            "predicted_class": "Unknown",
-            "confidence": confidence,
-            "all_predictions": {class_names[i]: float(p) for i, p in enumerate(probs)}
-        }
+    belonging_classes = [cls for cls, d in distances.items() if d <= thresholds_95[cls]]
 
-    return {
-        "predicted_class": class_names[predicted_index],
-        "confidence": confidence,
-        "all_predictions": {class_names[i]: float(p) for i, p in enumerate(probs)}
-    }
+    if len(belonging_classes) == 0:
+        return "This is not an eye X-ray image", distances
+    elif len(belonging_classes) == 1:
+        return belonging_classes[0], distances
+    else:
+        best_cls = min(belonging_classes, key=lambda c: distances[c])
+        return best_cls, distances
 
-@app.get("/")
-async def root():
-    return {
-        "message": "Enhanced Eye Disease Classification API",
-        "status": "active",
-        "features": [
-            "Disease classification",
-            "Confidence analysis",
-            "Low-confidence filter"
-        ]
-    }
 
-@app.get("/classes")
-async def get_classes():
-    return {"classes": class_names}
+# ===== 4) إنشاء FastAPI =====
+app = FastAPI(title="Eye Disease Classifier API")
 
-if __name__ == "__main__":
-    uvicorn.run(app, host="127.0.0.1", port=8000)
+
+@app.post("/predict")
+async def predict(file: UploadFile = File(...)):
+    try:
+        # التحقق إن الملف صورة
+        if not file.content_type.startswith("image/"):
+            return JSONResponse({"error": "Uploaded file is not an image. Please upload a valid image file."})
+
+        # قراءة الصورة من الـ bytes
+        contents = await file.read()
+        try:
+            img = Image.open(io.BytesIO(contents)).convert("RGB")
+        except Exception:
+            return JSONResponse({"error": "Cannot open image. Make sure it is a valid image file (JPG/PNG)."})
+
+        img = img.resize((224, 224))
+        img_array = np.array(img)
+
+        pred_class, distances = predict_image_array(img_array)
+        distances = {k: float(f"{v:.4f}") for k, v in distances.items()}
+
+        return JSONResponse({
+            "filename": file.filename,
+            "predicted_class": pred_class,
+            "distances": distances
+        })
+
+    except Exception as e:
+        return JSONResponse({"error": str(e)})
