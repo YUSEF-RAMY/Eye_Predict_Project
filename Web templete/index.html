@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DashBourd</title>
+    <link rel="stylesheet" href="style.css" />
+    <script defer src="script.js"></script>
+    <!-- Font Awesome for icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <div class="dashboard">
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <div class="logo">
+          <i class="fa-solid fa-shapes"></i>
+          <span>DashBoard</span>
+        </div>
+
+        <nav class="menu">
+          <a href="#" class="active"><i class="fa-solid fa-users"></i> Users</a>
+          <!-- <a href="#"><i class="fa-solid fa-gear"></i> Settings</a> -->
+        </nav>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="main-content">
+        <header class="header">
+          <h2>User Status</h2>
+          <div class="header-actions">
+            <input type="text" id="tableSearch" placeholder="Search for..." />
+          </div>
+        </header>
+
+        
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th><input type="checkbox" id="selectAll" /></th>
+                <th>Id</th>
+                <th>User Name</th>
+                <th>Date</th>
+                <th>Status</th>
+                <th>Emaile</th>
+                <th>Number of photos</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><input type="checkbox" /></td>
+                <td>#1</td>
+                <td>John Carter<br /></td>
+                <td>Jan 30, 2024</td>
+                <td><span class="status delivered">● Online</span></td>
+                <td>hello@johncarter.com</td>
+                <td style="padding-left: 50px">2 photo</td>
+                <td>
+                  <i class="fa-solid fa-trash" style="padding-left: 20px"></i>
+                </td>
+              </tr>
+              <tr>
+                <td><input type="checkbox" /></td>
+                <td>#2</td>
+                <td>John Carter<br /></td>
+                <td>Jan 30, 2024</td>
+                <td><span class="status delivered">● Online</span></td>
+                <td>hello@johncarter.com</td>
+                <td style="padding-left: 50px">5 photo</td>
+                <td>
+                  <i class="fa-solid fa-trash" style="padding-left: 20px"></i>
+                </td>
+              </tr>
+              <tr>
+                <td><input type="checkbox" /></td>
+                <td>#3</td>
+                <td>John Carter<br /></td>
+                <td>Jan 30, 2024</td>
+                <td><span class="status delivered">● Online</span></td>
+                <td>hello@johncarter.com</td>
+                <td style="padding-left: 50px">9 photo</td>
+                <td>
+                  <i class="fa-solid fa-trash" style="padding-left: 20px"></i>
+                </td>
+              </tr>
+              <tr>
+                <td><input type="checkbox" /></td>
+                <td>#4</td>
+                <td>John Carter<br /></td>
+                <td>Jan 30, 2024</td>
+                <td><span class="status delivered">● Online</span></td>
+                <td>hello@johncarter.com</td>
+                <td style="padding-left: 50px">5 photo</td>
+                <td>
+                  <i class="fa-solid fa-trash" style="padding-left: 20px"></i>
+                </td>
+              </tr>
+              <tr>
+                <td><input type="checkbox" /></td>
+                <td>#5</td>
+                <td>John Carter<br /></td>
+                <td>Jan 30, 2024</td>
+                <td><span class="status delivered">● Online</span></td>
+                <td>hello@johncarter.com</td>
+                <td style="padding-left: 50px">4photo</td>
+                <td>
+                  <i class="fa-solid fa-trash" style="padding-left: 20px"></i>
+                </td>
+              </tr>
+              <tr>
+                <td><input type="checkbox" /></td>
+                <td>#6</td>
+                <td>Andy Smith<br /></td>
+                <td>Jan 15, 2024</td>
+                <td><span class="status canceled">● Offline</span></td>
+                <td>hello@andysmith.com</td>
+                <td style="padding-left: 50px">2 photo</td>
+                <td>
+                  <i class="fa-solid fa-trash" style="padding-left: 20px"></i>
+                </td>
+              </tr>
+              <tr>
+                <td><input type="checkbox" /></td>
+                <td>#7</td>
+                <td>Andy Smith<br /></td>
+                <td>Jan 15, 2024</td>
+                <td><span class="status canceled">● Offline</span></td>
+                <td>hello@andysmith.com</td>
+                <td style="padding-left: 50px">2 photo</td>
+                <td>
+                  <i class="fa-solid fa-trash" style="padding-left: 20px"></i>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>
