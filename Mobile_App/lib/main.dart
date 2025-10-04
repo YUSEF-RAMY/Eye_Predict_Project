@@ -38,7 +38,7 @@ class EyeApp extends StatelessWidget {
           OldPictureScreen.id: (context) => OldPictureScreen(),
         },
         debugShowCheckedModeBanner: false,
-        initialRoute: OnboardingScreen.id,
+        initialRoute: LoginScreen.id,
       ),
     );
   }
