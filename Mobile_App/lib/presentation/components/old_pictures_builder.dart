@@ -14,7 +14,7 @@ class OldPicturesBuilder extends StatefulWidget {
 }
 
 class _OldPicturesBuilderState extends State<OldPicturesBuilder> {
-  var future;
+  late var future;
 
   @override
   void initState() {
@@ -41,7 +41,7 @@ class _OldPicturesBuilderState extends State<OldPicturesBuilder> {
                 children: [
                   Spacer(flex: 1),
                   Center(
-                    child: CircularProgressIndicator(color: ColorManager.black),
+                    child: CircularProgressIndicator(color: ColorManager.white),
                   ),
                   Spacer(flex: 2),
                 ],
