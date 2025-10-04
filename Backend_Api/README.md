@@ -7,10 +7,6 @@ It provides:
 
 ---
 
-## 🚀 Features
-
----
-
 ## 🛠️ Tech Stack
 - **Laravel 12**
 - **Blade Templates**
