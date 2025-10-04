@@ -24,18 +24,18 @@ The project aims to support **early diagnosis of eye diseases** by:
 - **Backend:** Laravel (PHP), MySQL  
 - **Mobile:** Flutter (Dart)  
 - **Web:** React.js  
-- **Tools:** Docker (optional), Git, Postman  
+- **Tools:** Git, Postman  
 
 ---
 
 ## 👥 Team Members
-| Name                         | Role                        |
+| Name                          | Role                        |
 |-------------------------------|-----------------------------|
-| Youssef Ramy Mohamed Saber    | Team Leader & Backend Dev   |
-| Mariam Mahmoud El-Azab        | Frontend (React) & UI/UX    |
+| Yusef Ramy Mohamed Saber      | Team Leader & Backend Dev   |
+| Maryam Mahmoud El-Azab        | Frontend (React) & UI/UX    |
 | Hebaallah Ibrahim             | AI Developer                |
-| Youssef Sameer Shafik         | AI Developer                |
-| Amr Khalis Elsayed Saleh      | Mobile App (Flutter)        |
+| Yusef Samir Shafik            | AI Developer                |
+| Amr Khalid Elsayed Saleh      | Mobile App (Flutter)        |
 
 ---
 
