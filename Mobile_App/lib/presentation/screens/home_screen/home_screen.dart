@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:eye_app/data/model/image_result_model.dart';
 import 'package:eye_app/main.dart';
+import 'package:eye_app/presentation/components/nav_bar.dart';
 import 'package:eye_app/presentation/resources/color_manager.dart';
 import 'package:eye_app/presentation/resources/text_style_manager.dart';
 import 'package:eye_app/presentation/screens/results_screen/results_screen.dart';
@@ -16,7 +17,7 @@ class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   static String id = 'HomeScreen';
-  static late ImageResultModel  imageResultModel;
+  static late ImageResultModel imageResultModel;
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -39,56 +40,67 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ColorManager.background_color,
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          crossAxisAlignment: CrossAxisAlignment.center,
+      body: SafeArea(
+        child: Stack(
           children: [
             Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Icon(
-                  Icons.camera_alt_outlined,
-                  color: ColorManager.gray,
-                  size: 135,
-                ),
-                SizedBox(height: 4.h),
-                Text('Choose a picture', style: TextStyleManager.White16Medium),
-              ],
-            ),
-            Text(
-              'Please choose a picture to your eyes',
-              style: TextStyleManager.White16Medium,
-            ),
-            GestureDetector(
-              onTap: () async {
-                await pickImage(ImageSource.camera);
-                log(EyeApp.token);
-                log(_image.path);
-                HomeScreen.imageResultModel = await uploadImageRequest(imageFile: _image);
-                if (EyeApp.success == true) {
-                  Navigator.pushReplacementNamed(context, ResultsScreen.id);
-                }
-              },
-              child: Container(
-                width: 195.w,
-                height: 56.h,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  color: ColorManager.primary,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                Column(
                   children: [
+                    SizedBox(width: double.infinity,),
                     Icon(
-                      Icons.photo_size_select_actual_outlined,
-                      color: ColorManager.white,
+                      Icons.camera_alt_outlined,
+                      color: ColorManager.gray,
+                      size: 135,
                     ),
-                    SizedBox(width: 8.w),
-                    Text('Upload photo', style: TextStyleManager.White16Bold),
+                    SizedBox(height: 4.h),
+                    Text(
+                      'Choose a picture',
+                      style: TextStyleManager.White16Medium,
+                    ),
                   ],
                 ),
-              ),
+                Text(
+                  'Please choose a picture to your eyes',
+                  style: TextStyleManager.White16Medium,
+                ),
+                GestureDetector(
+                  onTap: () async {
+                    await pickImage(ImageSource.camera);
+                    log(EyeApp.token);
+                    log(_image.path);
+                    HomeScreen.imageResultModel = await uploadImageRequest(
+                      imageFile: _image,
+                    );
+                    if (EyeApp.success == true) {
+                      Navigator.pushReplacementNamed(context, ResultsScreen.id);
+                    }
+                  },
+                  child: Container(
+                    width: 195.w,
+                    height: 56.h,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                      color: ColorManager.primary,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.photo_size_select_actual_outlined,
+                          color: ColorManager.white,
+                        ),
+                        SizedBox(width: 8.w),
+                        Text('Upload photo', style: TextStyleManager.White16Bold),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
             ),
+            NavBar(isHome: true, isOldPicture: false),
           ],
         ),
       ),

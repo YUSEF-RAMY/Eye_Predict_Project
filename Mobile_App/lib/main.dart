@@ -1,6 +1,7 @@
 import 'package:eye_app/presentation/screens/finish_screen/finish_screen.dart';
 import 'package:eye_app/presentation/screens/home_screen/home_screen.dart';
 import 'package:eye_app/presentation/screens/login_screen/login_screen.dart';
+import 'package:eye_app/presentation/screens/old_picture_screen/old_picture_screen.dart';
 import 'package:eye_app/presentation/screens/onboarding_screen/onboarding_screen.dart';
 import 'package:eye_app/presentation/screens/results_screen/results_screen.dart';
 import 'package:eye_app/presentation/screens/signup_screen/signup_screen.dart';
@@ -34,6 +35,7 @@ class EyeApp extends StatelessWidget {
           OnboardingScreen.id: (context) => OnboardingScreen(),
           ResultsScreen.id: (context) => ResultsScreen(),
           FinishScreen.id: (context) => FinishScreen(),
+          OldPictureScreen.id: (context) => OldPictureScreen(),
         },
         debugShowCheckedModeBanner: false,
         initialRoute: LoginScreen.id,
