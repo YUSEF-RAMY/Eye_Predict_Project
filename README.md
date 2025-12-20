@@ -34,7 +34,6 @@ The project aims to support **early diagnosis of eye diseases** by:
 | Yusef Ramy Mohamed Saber      | Team Leader & Backend Dev   |
 | Maryam Mahmoud El-Azab        | Frontend (React) & UI/UX    |
 | Hebaallah Ibrahim             | AI Developer                |
-| Yusef Samir Shafik            | AI Developer                |
 | Amr Khalid Elsayed Saleh      | Mobile App (Flutter)        |
 
 ---
